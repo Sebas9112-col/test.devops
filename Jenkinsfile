@@ -1,34 +1,18 @@
-pipeline {
-    agent any
+node {
+  stage("Clone the project") {
+    git branch: 'main', url: 'https://github.com/nkchauhan003/jenkins-demo.git'
+  }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                // Checkout del repositorio de código
-                git 'https://github.com/tu_usuario/tu_proyecto.git'
-            }
-        }
-        
-        stage('Unit Tests') {
-            steps {
-                // Ejecutar pruebas unitarias
-                sh 'mvn test'
-            }
-        }
-        
-        stage('Build') {
-            steps {
-                // Compilación del proyecto
-                sh 'mvn package'
-            }
-        }
-        
-        stage('Deploy') {
-            steps {
-                // Desplegar la aplicación en tu servidor o entorno de destino
-                // Aquí puedes usar scripts o comandos específicos para tu caso
-                // Por ejemplo: sh 'scp target/my-spring-boot-app.jar usuario@servidor:/ruta/del/servidor'
-            }
-        }
+  stage("Compilation") {
+    sh "./mvnw clean install -DskipTests"
+  }
+
+  stage("Tests and Deployment") {
+    stage("Runing unit tests") {
+      sh "./mvnw test -Punit"
     }
+    stage("Deployment") {
+      sh 'nohup ./mvnw spring-boot:run -Dserver.port=8001 &'
+    }
+  }
 }
