@@ -1,6 +1,6 @@
 node {
   stage("Clone the project") {
-    git branch: 'main', url: 'https://github.com/nkchauhan003/jenkins-demo.git'
+   git branch: 'dev', credentialsId: 'Sebas9112-col', url: 'https://github.com/Sebas9112-col/test.devops.git'
   }
 
   stage("Compilation") {
