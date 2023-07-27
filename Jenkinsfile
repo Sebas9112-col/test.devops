@@ -1,6 +1,6 @@
 node {
   stage("Clone the project") {
-   git branch: 'dev', credentialsId: 'Sebas9112-col', url: 'https://github.com/Sebas9112-col/test.devops.git'
+   git branch: 'dev', credentialsId: 'Sebas9112-col_git', url: 'https://github.com/Sebas9112-col/test.devops.git'
   }
 
   stage("Compilation") {
