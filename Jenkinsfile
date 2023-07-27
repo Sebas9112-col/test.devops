@@ -1,9 +1,18 @@
-FROM adoptopenjdk:11-jre-hotspot
+node {
+  stage("Clone the project") {
+   git branch: 'dev', credentialsId: 'Sebas9112-col_git', url: 'https://github.com/Sebas9112-col/test.devops.git'
+  }
 
-WORKDIR /app
+  stage("Compilation") {
+    sh "mvn clean install -DskipTests"
+  }
 
-COPY target/Devops-*.jar /app/my-spring-boot-app.jar
-
-EXPOSE 8080
-
-CMD ["java", "-jar", "my-spring-boot-app.jar"]
+  stage("Tests and Deployment") {
+    stage("Runing unit tests") { 
+      sh "./mvnw test -Punit"
+    }
+    stage("Deployment") {
+      sh 'nohup ./mvnw spring-boot:run -Dserver.port=8001 &'
+    }
+  }
+}
