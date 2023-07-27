@@ -7,6 +7,13 @@ node {
     sh "mvn clean install -DskipTests"
   }
 
+  stage('SonarQube Analysis') {
+    def mvn = tool 'Default Maven';
+    withSonarQubeEnv() {
+      sh "mvn clean verify sonar:sonar -Dsonar.projectKey=devops -Dsonar.projectName='devops'"
+    }
+  }
+
   stage("Tests and Deployment") {
     stage("Runing unit tests") { 
       sh "mvn test -Punit"
