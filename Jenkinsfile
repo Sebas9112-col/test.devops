@@ -1,5 +1,8 @@
 node {
   stage("Clone  the project") {
+environment {
+               registryCredential = 'sebasam91'
+           }
  script {
           docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
             dockerImage.push("latest")
