@@ -1,5 +1,10 @@
 node {
   stage("Clone  the project") {
+ script {
+          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+            dockerImage.push("latest")
+          }
+        }
    git branch: 'dev', credentialsId: 'Sebas9112-col_git', url: 'https://github.com/Sebas9112-col/test.devops.git'
   }
 
