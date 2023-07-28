@@ -1,4 +1,4 @@
-node {
+node("kubeagent") {
   stage("Clone  the project") {
 environment {
                registryCredential = 'sebasam91'
